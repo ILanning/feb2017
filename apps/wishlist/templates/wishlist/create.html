@@ -1,0 +1,12 @@
+{% extends "wishlist/base.html" %}
+{% block title %}Create an Item{% endblock %}
+
+{% block body %}
+  <h1>Create a new Wishlist Item</h1>
+  <form action="{% url 'Wishlist:MakeItem' %}" method="post">
+    {% csrf_token %}
+    <label for="name">Item/Product:</label>
+    <input type="text" name="name">
+    <input type="submit" value="Add">
+  </form>
+{% endblock %}

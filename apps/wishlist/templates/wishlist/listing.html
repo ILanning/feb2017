@@ -1,0 +1,12 @@
+{% extends "wishlist/base.html" %}
+{% block title %}{{item.name}}{% endblock %}
+
+{% block body %}
+  <h1>{{item.name}}</h1>
+  <h3>Users who added this item to their wishlist:</h3>
+  <ul>
+    {% for list in listed_by %}
+      <li>{{list.creator.name}}</li>
+    {% endfor %}
+  </ul>
+{% endblock %}

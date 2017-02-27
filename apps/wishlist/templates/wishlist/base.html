@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>{% block title %}{% endblock %}</title>
+    {% load staticfiles %}
+    <link rel="stylesheet" href="{% static 'wishlist/css/style.css' %}">
+  </head>
+  <body>
+    <div class="header">
+      <a href="{% url 'Wishlist:Index' %}">Home</a>
+      <a href="{% url 'Login:Logout' %}">Log Out</a>
+    </div>
+    {% block body %}
+    {% endblock %}
+  </body>
+</html>

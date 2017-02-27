@@ -1,0 +1,57 @@
+{% extends "wishlist/base.html" %}
+{% block title %}Dashboard{% endblock %}
+
+{% block body %}
+  <h1>Hello, {{user.name}}!</h1>
+  <a href="{% url 'Wishlist:Create' %}">Add Item</a>
+  Your Wishlist:
+  <table>
+    <tr>
+      <th>Item</th>
+      <th>Added By</th>
+      <th>Date Added</th>
+      <th>Action</th>
+    </tr>
+    {% for item in myList %}
+      <tr>
+        <td><a href="{% url 'Wishlist:View' item.id %}">{{item.name}}</a></td>
+        <td>{{item.creator.name}}</td>
+        <td>{{item.created_at}}</td>
+        {% if item.creator.id != request.session.user_id %}
+          <td><form  action="{% url 'Wishlist:RemoveFromList' %}" method="post">
+            {% csrf_token %}
+            <input type="hidden" name="item_id" value="{{item.id}}">
+            <input type="submit" value="Remove from my Wishlist">
+          </form></td>
+        {% else %}
+          <td><form action="{% url 'Wishlist:DestroyItem' %}" method="post">
+            {% csrf_token %}
+            <input type="hidden" name="item_id" value="{{item.id}}">
+            <input type="Submit" value="Delete">
+          </form></td>
+        {% endif %}
+      </tr>
+    {% endfor %}
+  </table>
+  Other User's Wishlists:
+  <table>
+    <tr>
+      <th>Item</th>
+      <th>Added By</th>
+      <th>Date Added</th>
+      <th>Action</th>
+    </tr>
+    {% for item in otherList %}
+      <tr>
+        <td><a href="{% url 'Wishlist:View' item.id %}">{{item.name}}</a></td>
+        <td>{{item.creator.name}}, {{item.creator.username}}</td>
+        <td>{{item.created_at}}</td>
+        <td><form  action="{% url 'Wishlist:AddToList' %}" method="post">
+          {% csrf_token %}
+          <input type="hidden" name="item_id" value="{{item.id}}">
+          <input type="submit" value="Add to my Wishlist">
+        </form></td>
+      </tr>
+    {% endfor %}
+  </table>
+{% endblock %}
